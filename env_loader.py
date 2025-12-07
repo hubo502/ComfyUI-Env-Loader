@@ -75,18 +75,27 @@ class EnvKeySelector:
 
 
 class EnvKeys:
+    # 动态根据启动时的 .env 生成输出数量与名称
+    _initial_values = parse_env_file(ENV_PATH)
+    _initial_keys = list(_initial_values.keys())
+
     @classmethod
     def INPUT_TYPES(cls):
         return {"required": {}}
 
-    RETURN_TYPES = ("STRING",)
-    RETURN_NAMES = ("value",)
-    FUNCTION = "list_keys"
+    # 在导入时固定输出数量与名称；若无 key，提供一个占位输出
+    RETURN_TYPES = tuple(["STRING"] * max(1, len(_initial_keys)))
+    RETURN_NAMES = tuple(_initial_keys) if _initial_keys else ("keys",)
+    FUNCTION = "list_values"
     CATEGORY = "Utils"
 
-    def list_keys(self):
-        keys = list(parse_env_file(ENV_PATH).keys())
-        return (", ".join(keys),)
+    def list_values(self):
+        values = parse_env_file(ENV_PATH)
+        if self._initial_keys:
+            out = [values.get(k, "") for k in self._initial_keys]
+        else:
+            out = [", ".join(list(values.keys()))]
+        return tuple(out)
 
     def IS_CHANGED(self, **kwargs):
         try:
