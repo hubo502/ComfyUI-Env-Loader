@@ -1,0 +1,13 @@
+# ComfyUI custom node gitignore
+__pycache__/
+*.pyc
+.DS_Store
+.vscode/
+.idea/
+
+# Do not commit environment secrets
+.env
+
+# Test and temp files
+*.log
+tmp/
