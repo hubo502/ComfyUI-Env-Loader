@@ -73,3 +73,24 @@ class EnvKeySelector:
         except Exception:
             return time.time()
 
+
+class EnvKeys:
+    @classmethod
+    def INPUT_TYPES(cls):
+        return {"required": {}}
+
+    RETURN_TYPES = ("STRING",)
+    RETURN_NAMES = ("value",)
+    FUNCTION = "list_keys"
+    CATEGORY = "Utils"
+
+    def list_keys(self):
+        keys = list(parse_env_file(ENV_PATH).keys())
+        return (", ".join(keys),)
+
+    def IS_CHANGED(self, **kwargs):
+        try:
+            return os.path.getmtime(ENV_PATH)
+        except Exception:
+            return time.time()
+

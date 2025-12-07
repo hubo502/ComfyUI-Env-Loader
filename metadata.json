@@ -1,14 +1,15 @@
 {
   "name": "ComfyUI-Env-Loader",
   "description": "ComfyUI custom node that loads .env keys, offers dropdown selection, and returns values with startup logging.",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "license": "MIT",
   "author": "Boris Hu",
   "repository": "https://github.com/hubo502/ComfyUI-Env-Loader",
   "comfyui": {
     "category": "Utils",
     "nodes": [
-      "EnvKeySelector"
+      "EnvKeySelector",
+      "EnvKeys"
     ],
     "requires": []
   }
